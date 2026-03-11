@@ -1,9 +1,12 @@
 import geopandas as gpd
 from sqlalchemy import create_engine
+import os
 
 from spatial_weights import contiguity_weights, knn_weights, distance_weights
 from visualization import visualize_neighbors
 from moran import calculate_global_morans_I, calculate_local_morans_I
+
+os.makedirs("output", exist_ok=True)
 
 host = "localhost"
 port = "5432"
@@ -39,4 +42,11 @@ print("Global Moran's I:", moran_I)
 print("p-value:", p_value)
 
 gdf_local = calculate_local_morans_I(gdf, w, attribute)
-print(gdf_local.loc[gdf_local["cluster"] != "Not Significant"].head())
+# print(gdf_local.loc[gdf_local["cluster"] != "Not Significant"].head())
+
+gdf_local.to_file(
+    "output/spatial_clusters.geojson",
+    driver="GeoJSON"
+)
+
+print("Saved: output/spatial_clusters.geojson")
