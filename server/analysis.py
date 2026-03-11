@@ -3,7 +3,7 @@ from sqlalchemy import create_engine
 import os
 
 from spatial_weights import contiguity_weights, knn_weights, distance_weights
-from visualization import visualize_neighbors
+from visualization import visualize_neighbors, visualize_local_moran
 from moran import calculate_global_morans_I, calculate_local_morans_I
 
 os.makedirs("output", exist_ok=True)
@@ -44,9 +44,11 @@ print("p-value:", p_value)
 gdf_local = calculate_local_morans_I(gdf, w, attribute)
 # print(gdf_local.loc[gdf_local["cluster"] != "Not Significant"].head())
 
-gdf_local.to_file(
-    "output/spatial_clusters.geojson",
-    driver="GeoJSON"
-)
+# gdf_local.to_file(
+#     "output/spatial_clusters.geojson",
+#     driver="GeoJSON"
+# )
 
-print("Saved: output/spatial_clusters.geojson")
+# print("Saved: output/spatial_clusters.geojson")
+
+visualize_local_moran(gdf_local)
