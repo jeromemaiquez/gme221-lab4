@@ -32,7 +32,8 @@ w = contiguity_weights(gdf)
 # print("Neighbors:", w.neighbors)
 # visualize_neighbors(gdf, w)
 
-attribute = "ass_ass_va"
+# attribute = "ass_ass_va"
+attribute = "ass_market"
 moran_I, p_value = calculate_global_morans_I(gdf, w, attribute)
 print("Global Moran's I:", moran_I)
-print("p-value", p_value)
+print("p-value:", p_value)
