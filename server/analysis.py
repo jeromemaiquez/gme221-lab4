@@ -3,7 +3,7 @@ from sqlalchemy import create_engine
 
 from spatial_weights import contiguity_weights, knn_weights, distance_weights
 from visualization import visualize_neighbors
-from moran import calculate_global_morans_I
+from moran import calculate_global_morans_I, calculate_local_morans_I
 
 host = "localhost"
 port = "5432"
@@ -32,8 +32,11 @@ w = contiguity_weights(gdf)
 # print("Neighbors:", w.neighbors)
 # visualize_neighbors(gdf, w)
 
-# attribute = "ass_ass_va"
-attribute = "ass_market"
+attribute = "ass_ass_va"
+# attribute = "ass_market"
 moran_I, p_value = calculate_global_morans_I(gdf, w, attribute)
 print("Global Moran's I:", moran_I)
 print("p-value:", p_value)
+
+gdf_local = calculate_local_morans_I(gdf, w, attribute)
+print(gdf_local.loc[gdf_local["cluster"] != "Not Significant"].head())
