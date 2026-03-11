@@ -28,15 +28,15 @@ gdf = gpd.read_postgis(sql_query, engine, geom_col="geom")
 # print(gdf.head())
 # print("CRS:", gdf.crs)
 
-# w = distance_weights(gdf, 30)
+# w = distance_weights(gdf)
 # w = knn_weights(gdf)
 w = contiguity_weights(gdf)
 
 # print("Neighbors:", w.neighbors)
 # visualize_neighbors(gdf, w)
 
-attribute = "ass_ass_va"
-# attribute = "ass_market"
+# attribute = "ass_ass_va"
+attribute = "ass_market"
 moran_I, p_value = calculate_global_morans_I(gdf, w, attribute)
 print("Global Moran's I:", moran_I)
 print("p-value:", p_value)
