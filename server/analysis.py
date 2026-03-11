@@ -24,8 +24,8 @@ gdf = gpd.read_postgis(sql_query, engine, geom_col="geom")
 # print(gdf.head())
 # print("CRS:", gdf.crs)
 
-# w = distance_weights(gdf)
-w = knn_weights(gdf, k=3)
+w = distance_weights(gdf, 30)
+# w = knn_weights(gdf)
 # w = contiguity_weights(gdf)
 
 # print("Neighbors:", w.neighbors)
